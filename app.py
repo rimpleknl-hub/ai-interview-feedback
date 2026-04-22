@@ -10,7 +10,13 @@ st.set_page_config(page_title="AI Interview Feedback", layout="centered")
 st.title("AI Interview Feedback Assistant 🤖")
 
 # ---------- API ----------
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+api_key = os.getenv("OPENAI_API_KEY")
+
+if not api_key:
+    st.error("API key not found. Please set it in Streamlit Secrets.")
+    st.stop()
+
+client = OpenAI(api_key=api_key)
 # ---------- FUNCTION: READ WORD FILE ----------
 def read_docx(file):
     doc = Document(file)
